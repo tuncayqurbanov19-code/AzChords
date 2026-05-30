@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Stylized Guitar Body & Music Note inside 66dp center safe zone -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M54,28 C46,28 40,33 40,41 C40,46 44,50 47,53 C44,57 41,61 41,66 C41,73 47,78 54,78 C61,78 67,73 67,66 C67,61 64,57 61,53 C64,50 68,46 68,41 C68,33 62,28 54,28 Z M54,69 C50.5,69 48,66.5 48,63 C48,59.5 50.5,57 54,57 C57.5,57 60,59.5 60,63 C60,66.5 57.5,69 54,69 Z" />
+    <path
+        android:fillColor="#FFE082"
+        android:pathData="M52.5,33 L55.5,33 L55.5,58 L52.5,58 Z" />
+    <path
+        android:fillColor="#FF8F00"
+        android:pathData="M54,43 C52.3,43 51,41.7 51,40 C51,38.3 52.3,37 54,37 C55.7,37 57,38.3 57,40 C57,41.7 55.7,43 54,43 Z" />
+</vector>

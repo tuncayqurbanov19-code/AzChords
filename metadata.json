@@ -1,0 +1,6 @@
+{
+  "name": "AzChords",
+  "description": "AzChords - Azərbaycan mahnılarının akordları, transpozisiya, kapo dəyişimi, repertuar və rəylər ilə birlikdə.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

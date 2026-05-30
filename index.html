@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzChords - Azərbaycan Mahnı Akordları Portal</title>
+    <!-- Font link for premium serif display look -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Sleek Obsidian Dark Theme by default */
+            --bg-color: #070709;
+            --surface-bg: #0E0F12;
+            --surface-color: #14161B;
+            --surface-card: #181B22;
+            --surface-hover: #20242E;
+            --primary-color: #FFB300;
+            --primary-glow: rgba(255, 179, 0, 0.2);
+            --primary-border: rgba(255, 179, 0, 0.25);
+            --accent-color: #EF6C00;
+            --text-color: #F8F9FA;
+            --text-muted: #8E92A2;
+            --border-color: #242835;
+            --badge-bg: rgba(255, 179, 0, 0.08);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.7);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Light Theme variables toggle */
+        body.light-theme {
+            --bg-color: #F3F4F7;
+            --surface-bg: #EAECEF;
+            --surface-color: #FFFFFF;
+            --surface-card: #FDFEFE;
+            --surface-hover: #F2F4F7;
+            --primary-color: #D48000;
+            --primary-glow: rgba(212, 128, 0, 0.12);
+            --primary-border: rgba(212, 128, 0, 0.2);
+            --accent-color: #C15600;
+            --text-color: #1A1D24;
+            --text-muted: #646B7E;
+            --border-color: #D3D8E2;
+            --badge-bg: rgba(212, 128, 0, 0.06);
+            --shadow-sm: 0 2px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 16px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 32px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            transition: var(--transition-smooth);
+            overflow-x: hidden;
+            padding-bottom: 72px; /* Bottom bar padding for mobile navigation viewport limit */
+        }
+
+        svg {
+            fill: currentColor;
+        }
+
+        /* Ambient glowing background decorations */
+        .ambient-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,179,0,0.06) 0%, rgba(0,0,0,0) 70%);
+            top: -150px;
+            left: -150px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        body.light-theme .ambient-glow {
+            background: radial-gradient(circle, rgba(212,128,0,0.04) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .ambient-glow-two {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(239,108,0,0.04) 0%, rgba(0,0,0,0) 70%);
+            bottom: -200px;
+            right: -200px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header Navigation panel */
+        header {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(14, 15, 18, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-smooth);
+        }
+
+        body.light-theme header {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon-container {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-glow), transparent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-border);
+            color: var(--primary-color);
+            transition: var(--transition-smooth);
+        }
+
+        .logo:hover .logo-icon-container {
+            transform: rotate(-8deg) scale(1.05);
+            background: var(--primary-glow);
+        }
+
+        .logo-text h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 0.5px;
+            line-height: 1.1;
+        }
+
+        .logo-text p {
+            margin: 2px 0 0 0;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-theme-toggle {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-theme-toggle:hover {
+            background: var(--surface-hover);
+            transform: scale(1.05);
+        }
+
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--badge-bg);
+            border: 1px solid var(--primary-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .user-profile-badge:hover {
+            background: var(--primary-glow);
+            transform: translateY(-1px);
+        }
+
+        .user-profile-badge img, .user-avatar-small {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        /* App container layouts */
+        .app-layout {
+            width: 100%;
+            max-width: 1100px;
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 24px;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 850px) {
+            .app-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-panel {
+                display: none; /* Collapsed under toggle tabs in mobile navigation scheme */
+            }
+            .sidebar-panel.mobile-visible {
+                display: flex !important;
+            }
+            .main-content-panel.mobile-hidden {
+                display: none;
+            }
+        }
+
+        /* left column sidebar styling */
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Modern search box input widget */
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            background-color: var(--surface-bg);
+            border: 1.5px solid var(--border-color);
+            border-radius: 16px;
+            color: var(--text-color);
+            font-size: 14.5px;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 16px var(--primary-glow);
+            background-color: var(--surface-color);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            transition: var(--transition-smooth);
+        }
+
+        .search-box input:focus + svg {
+            color: var(--primary-color);
+        }
+
+        /* Stadium Pill Selection dock */
+        .tab-dock {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            padding: 5px;
+            border-radius: 14px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .tab-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px 4px;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+        }
+
+        .tab-item:hover {
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        body.light-theme .tab-item:hover {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .tab-item.active {
+            background-color: var(--primary-color);
+            color: #000 !important;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Scrollable song cards stack tray */
+        .song-list-tray {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: calc(100vh - 270px);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-right: 4px;
+        }
+
+        /* Custom scrollbar alignment */
+        .song-list-tray::-webkit-scrollbar, .lyrics-area::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .song-list-tray::-webkit-scrollbar-track, .lyrics-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .song-list-tray::-webkit-scrollbar-thumb, .lyrics-area::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+        .song-list-tray::-webkit-scrollbar-thumb:hover, .lyrics-area::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        /* Song Card item details */
+        .song-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .song-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: transparent;
+            transition: var(--transition-smooth);
+        }
+
+        .song-card:hover {
+            background-color: var(--surface-hover);
+            transform: translateX(3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .song-card.active {
+            background-color: var(--surface-card);
+            border-color: var(--primary-border);
+            box-shadow: 0 4px 12px rgba(255, 179, 0, 0.05);
+        }
+
+        .song-card.active::before {
+            background: var(--primary-color);
+        }
+
+        .song-card-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .song-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+            transition: var(--transition-smooth);
+        }
+
+        body.light-theme .song-badge {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .song-card.active .song-badge {
+            background: var(--badge-bg);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-border);
+        }
+
+        .song-meta-text {
+            min-width: 0;
+        }
+
+        .song-meta-text h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-meta-text p {
+            margin: 4px 0 0 0;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-views-pill {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        body.light-theme .song-views-pill {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .song-views-pill svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .trend-gold-1 { background-color: #FFB300 !important; color: #000 !important; }
+        .trend-silver-2 { background-color: #C0C0C0 !important; color: #000 !important; }
+        .trend-bronze-3 { background-color: #CD7F32 !important; color: #fff !important; }
+
+        /* Main center console detail layout */
+        .main-content-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+        }
+
+        /* Stage poster main hero details */
+        .stage-poster {
+            background: linear-gradient(135deg, rgba(20, 22, 27, 0.95), rgba(14, 15, 18, 0.95));
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        body.light-theme .stage-poster {
+            background: linear-gradient(135deg, #FFFFFF, #F5F6F8);
+        }
+
+        .stage-poster::after {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 60%);
+            top: -100px;
+            right: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .poster-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .poster-heading {
+            flex-grow: 1;
+        }
+
+        .stage-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--badge-bg);
+            border: 1px solid var(--primary-border);
+            color: var(--primary-color);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .poster-title {
+            margin: 0;
+            font-size: 32px;
+            font-weight: 900;
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: -0.5px;
+            color: var(--text-color);
+            line-height: 1.15;
+        }
+
+        .poster-artist {
+            margin: 6px 0 0 0;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        /* Tactile absolute floating buttons */
+        .btn-circle-lg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-circle-lg:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-border);
+            background: var(--badge-bg);
+            transform: scale(1.05);
+        }
+
+        .btn-circle-lg.is-favorite {
+            color: #FF1744;
+            border-color: rgba(255, 23, 68, 0.2);
+            background: rgba(255, 23, 68, 0.05);
+        }
+
+        .btn-circle-lg.is-favorite:hover {
+            transform: scale(1.1);
+            background: rgba(255, 23, 68, 0.1);
+        }
+
+        .poster-meta-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .metadata-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        /* Tactile Mixing Deck Transpose Console */
+        .mixing-deck {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 500px) {
+            .mixing-deck {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        .deck-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .deck-info h4 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-color);
+        }
+
+        .deck-info p {
+            margin: 4px 0 0 0;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .transpose-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .deck-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background-color: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .deck-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: var(--badge-bg);
+        }
+
+        .deck-display-badge {
+            background: var(--badge-bg);
+            border: 1px solid var(--primary-border);
+            color: var(--primary-color);
+            font-weight: 800;
+            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 8px 14px;
+            border-radius: 8px;
+            min-width: 44px;
+            text-align: center;
+        }
+
+        .deck-btn-reset {
+            background: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 6px 10px;
+            transition: var(--transition-smooth);
+        }
+
+        .deck-btn-reset:hover {
+            text-decoration: underline;
+            color: var(--accent-color);
+        }
+
+        /* Lead Sheet formatting design */
+        .lyrics-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @media (max-width: 500px) {
+            .lyrics-card {
+                padding: 16px;
+            }
+        }
+
+        .lyrics-area {
+            line-height: 2.2;
+            word-spacing: 1px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        /* Custom Chords layouts parsed precisely */
+        .chord-line {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .chord-chunk {
+            display: inline-block;
+            position: relative;
+            margin-top: 1.4rem; /* dynamic top height gap to prevent chord collisions */
+            margin-right: 4px;
+        }
+
+        .chord-badge {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            font-weight: 800;
+            font-size: 11.5px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--badge-bg);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-border);
+            padding: 1px 5px;
+            border-radius: 4px;
+            line-height: 1.1;
+            white-space: nowrap;
+            margin-bottom: 3px;
+            box-shadow: 0 0 6px var(--primary-glow);
+            user-select: none;
+        }
+
+        .chunk-text {
+            font-size: 15.5px;
+            font-weight: 500;
+            white-space: pre;
+            color: var(--text-color);
+            opacity: 0.95;
+        }
+
+        .plain-chunk {
+            font-size: 15.5px;
+            font-weight: 500;
+            white-space: pre;
+            color: var(--text-color);
+            opacity: 0.85;
+            margin-right: 4px;
+            margin-top: 1.4rem;
+        }
+
+        .line-break {
+            height: 18px;
+            width: 100%;
+        }
+
+        /* Interactive comments section styling */
+        .comments-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .comments-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comments-header-row h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .comment-compose {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comment-compose textarea {
+            width: 100%;
+            min-height: 80px;
+            background: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            resize: none;
+            transition: var(--transition-smooth);
+        }
+
+        .comment-compose textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            align-self: flex-end;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comment-item {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            transform: translateY(0);
+            animation: commentFadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes commentFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comment-avatar-wrapper {
+            flex-shrink: 0;
+        }
+
+        .comment-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .comment-body {
+            flex-grow: 1;
+        }
+
+        .comment-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .comment-user {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .comment-date {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.45;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Mock login area styling */
+        .locked-placeholder-card {
+            background: var(--surface-color);
+            border: 1.5px dashed var(--border-color);
+            border-radius: 24px;
+            padding: 48px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .locked-icon-badge {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--badge-bg);
+            border: 1px solid var(--primary-border);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .locked-placeholder-card h3 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .locked-placeholder-card p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 320px;
+            line-height: 1.5;
+        }
+
+        /* Form submissions panel */
+        .submission-panel {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-left: 4px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            background: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .bracket-tip {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--primary-color);
+            padding: 8px 12px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Preview container widget */
+        .live-preview-box {
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            margin-top: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        body.light-theme .live-preview-box {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        /* Profile authentication page card */
+        .profile-page-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .tab-indicator-group {
+            border-bottom: 1.5px solid var(--border-color);
+            display: flex;
+            gap: 16px;
+        }
+
+        .tab-ind-item {
+            padding: 10px 4px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .tab-ind-item.active {
+            color: var(--primary-color);
+        }
+
+        .tab-ind-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* Success & error state toasts layout */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1100;
+            pointer-events: none;
+        }
+
+        .toast-card {
+            background: var(--surface-card);
+            border: 1px solid var(--primary-border);
+            color: var(--text-color);
+            padding: 12px 18px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            pointer-events: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast-card.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-icon-success {
+            color: #00E676;
+        }
+
+        .toast-icon-error {
+            color: #FF1744;
+        }
+
+        /* Bottom Floating Bar Navigation for tablet/mobile device scale */
+        .bottom-nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(14, 15, 18, 0.9);
+            border-top: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            height: 64px;
+            z-index: 998;
+            padding: 0 16px;
+        }
+
+        body.light-theme .bottom-nav-bar {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            gap: 4px;
+            width: 60px;
+            height: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .bottom-nav-item svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 850px) {
+            .bottom-nav-bar {
+                display: flex;
+            }
+        }
+
+        /* Footer information details */
+        footer {
+            margin-top: auto;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 1100px;
+            background-color: var(--surface-bg);
+            border-radius: 16px 16px 0 0;
+        }
+
+        footer p {
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        footer p.promo {
+            margin-top: 8px;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11.5px;
+        }
+
+        .no-matches-text {
+            color: var(--text-muted);
+            text-align: center;
+            padding: 32px 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Verification tags */
+        .user-tag {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 11px;
+            background: var(--badge-bg);
+            border: 1px solid var(--primary-border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+
+        /* Animated page transition classes helper */
+        .fade-in-anim {
+            animation: paneFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes paneFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient luminous gradients -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-two"></div>
+
+    <!-- Web portal header block -->
+    <header>
+        <div class="logo" onclick="navigateToView('home')">
+            <div class="logo-icon-container">
+                <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <div class="logo-text">
+                <h1>AzChords</h1>
+                <p>Musiqi Akord Portalı (Web Portal)</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button class="btn-theme-toggle" onclick="toggleTheme()" title="Mövzunu Dəyişdir">☀️</button>
+            <div id="userProfileComponent" class="user-profile-badge" onclick="navigateToView('profile')">
+                <div class="user-avatar-small">Q</div>
+                <span>Daxil Ol</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container grid spacing -->
+    <div class="app-layout">
+        
+        <!-- SIDEBAR VIEW: Song navigation directory indexing -->
+        <div id="sidePanel" class="sidebar-panel">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Mahnı və sənətçi axtar..." oninput="handleSearch(this.value)">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+
+            <!-- Stadium Dock for filters -->
+            <div class="tab-dock">
+                <div id="tabAll" class="tab-item active" onclick="setFilterTab('all')">Bütün</div>
+                <div id="tabTrending" class="tab-item" onclick="setFilterTab('trending')">🔥 Trend</div>
+                <div id="tabRepertoire" class="tab-item" onclick="setFilterTab('repertoire')">⭐ Repertuar</div>
+            </div>
+
+            <!-- List Tray for songs cards -->
+            <div id="songsTrayList" class="song-list-tray">
+                <!-- Javascript will load records here dynamically -->
+            </div>
+        </div>
+
+        <!-- MAIN WINDOW PRESENTER AREA: Controls details, submissions, user profiles based on active view state -->
+        <main id="mainPanel" class="main-content-panel">
+            <!-- Loading dynamic panels dynamically -->
+        </main>
+
+    </div>
+
+    <!-- Bottom Navigation Float Frame exclusively for Mobile Screens -->
+    <nav class="bottom-nav-bar">
+        <button id="bottomNavHome" class="bottom-nav-item active" onclick="handleMobileNavigation('home_list')">
+            <svg viewBox="0 0 24 24"><path d="M4 10v11h6v-6h4v6h6V10l-8-7z"/></svg>
+            <span>Ana Səhifə</span>
+        </button>
+        <button id="bottomNavDetail" class="bottom-nav-item" onclick="handleMobileNavigation('lyrics_view')">
+            <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            <span>Akordlar</span>
+        </button>
+        <button id="bottomNavAdd" class="bottom-nav-item" onclick="handleMobileNavigation('add_song')">
+            <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            <span>Əlavə Et</span>
+        </button>
+        <button id="bottomNavProfile" class="bottom-nav-item" onclick="handleMobileNavigation('profile')">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            <span>Profil</span>
+        </button>
+    </nav>
+
+    <!-- Footer of the web application -->
+    <footer>
+        <p>© 2026 AzChords - Azərbaycan və İngilis dilli mahnıların rəsmi milli akord bazası.</p>
+        <p class="promo">Səs diapazonunu səhnədə qüsursuz səsləndirmək üçün transpozisiyanı -5 və +5 aralığında tənzimləyin.</p>
+    </footer>
+
+    <!-- Absolute Host for Toasts Notifications alerts -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Application Script Block containing real state, transposer logic, database caching -->
+    <script>
+        // Default seed data aligning precisely with the App Room Database
+        const SEED_SONGS = [
+            {
+                id: 1,
+                title: "Sarı Gəlin",
+                artist: "Azərbaycan Xalq Mahnısı",
+                chordsAndLyrics: "[Am]Saçın ucun [Dm]hörməzlər\n[G]Gülü sulu [C]dərməzlər\n[Dm]Sarı gəlin [Am]\n\n[Am]Bu sevda nə [Dm]sevdadır\n[G]Səni mənə [C]verməzlər\n[Dm]Neylim aman, [Am]aman\n[F]Sarı gəlin [Am]\n\n[Am]Bu dərənin [Dm]uzunu,\n[G]Çoban qaytar [C]quzunu, quzunu.\n[Dm]Sarı gəlin [Am]\n\n[Am]Neylim aman, [Dm]aman\n[F]Sarı gəlin [Am]",
+                capo: 2,
+                views: 1250,
+                isApproved: true,
+                submittedByUsername: "Sistem"
+            },
+            {
+                id: 2,
+                title: "Sən Gəlməz Oldun",
+                artist: "Alim Qasımov",
+                chordsAndLyrics: "[Am]Deirdin baharda [Dm]görüşəcəyik,\n[G]Bahar gəldi keçdi, [C]sən gəlməz oldun.\n[Dm]Yarpaqlar töküldü, [Am]payız da gəldi,\n[F]Sən gəlməz oldun, [E]sən gəlməz oldun.\n\n[Am]Sən gəlməz [Dm]oldun,\n[G]Sən gəlməz [C]oldun,\n[Dm]Sən gəlməz [Am]oldun,\n[F]Yarım sən gəlməz [E]oldun.\n\n[Am]Gözlərim caddədə, [Dm]qulağım səsdə,\n[G]Təbibim, can üstə [C]sən gəlməz oldun.\n[Dm]Yarpaqlar töküldü, [Am]payız da gəldi,\n[F]Sən gəlməz oldun, [E]sən gəlməz oldun.",
+                capo: 1,
+                views: 2840,
+                isApproved: true,
+                submittedByUsername: "Sistem"
+            },
+            {
+                id: 3,
+                title: "Azərbaycan",
+                artist: "Müslüm Maqomayev",
+                chordsAndLyrics: "[G]Çox keçmişəm bu [C]dağlardan,\n[D]Durna gözlü [G]bulaqlardan,\n[C]Eşitmişəm [G]uzaqlardan,\n[D]Sakit axan [G]Arazı.\n\n[G]Azərbaycan, [C]Azərbaycan!\n[D]Odlar yurdu [G]Azərbaycan!\n\n[G]Bir tərəfi [C]bəhri-Xəzər,\n[D]Yaşıl qoynu [G]göz oxşar,\n[C]Sənin şanın [G]böyük olar,\n[D]Ana yurdum, [G]gözəlim.",
+                capo: 0,
+                views: 3500,
+                isApproved: true,
+                submittedByUsername: "Sistem"
+            },
+            {
+                id: 4,
+                title: "Külək",
+                artist: "Mirzə Babayev",
+                chordsAndLyrics: "[Am]Yenə əsir [Dm]soyuq külək,\n[G]Yenə sızlar [C]məyus ürək.\n[Dm]Sənsiz necə [Am]gülüm deyim,\n[E]Səni sevirəm, [Am]gözəlim, deyim.\n\n[Am]Külək, sən [Dm]əs, yarım gəlsin,\n[G]Onun ətri [C]bura gəlsin.\n[Dm]Öpüm onun [Am]gözlərindən,\n[E]O şirin [Am]sözlərindən.",
+                capo: 3,
+                views: 920,
+                isApproved: true,
+                submittedByUsername: "Sistem"
+            }
+        ];
+
+        const SEED_COMMENTS = [
+            {
+                id: 1,
+                songId: 2,
+                username: "musiqi_sever",
+                commentText: "Çox möhtəşəm bir əsərdir, akordları da çox dəqiq çıxarılıb. Səhnədə transpozisiya funksiyası çox kömək edir! Təşəkkürlər!",
+                timestamp: Date.now() - 7200000
+            },
+            {
+                id: 2,
+                songId: 1,
+                username: "akustik_gitarist",
+                commentText: "Azərbaycan xalq mahnılarının gözəl akkord yığımlarını paylaşdığınız üçün minnətdaram. Çox gözəl dərnəkdir.",
+                timestamp: Date.now() - 3600000 * 5
+            }
+        ];
+
+        // Base Notes definitions
+        const NOTES_SHARP = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        const NOTES_FLAT  = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+
+        // Application State Managers
+        let songs = [];
+        let comments = [];
+        let favorites = []; // list of favorited songIds
+        let currentUserId = null;
+        let currentUser = null; // object username, email, etc.
+        
+        let currentView = 'home'; // 'home' (lyrics pane), 'add_song' (add song form), 'profile' (auth/settings info)
+        let activeSongId = 1;
+        let activeFilterTab = 'all'; // 'all', 'trending', 'repertoire'
+        let activeTransposition = 0;
+        let searchQuery = "";
+
+        // Elements mapping
+        const sidePanel = document.getElementById('sidePanel');
+        const mainPanel = document.getElementById('mainPanel');
+        const searchInput = document.getElementById('searchInput');
+
+        // Initializing states dynamically
+        function initApp() {
+            // Load songs
+            const cachedSongs = localStorage.getItem('azchords_songs');
+            if (cachedSongs) {
+                songs = JSON.parse(cachedSongs);
+            } else {
+                songs = [...SEED_SONGS];
+                localStorage.setItem('azchords_songs', JSON.stringify(songs));
+            }
+
+            // Load comments
+            const cachedComments = localStorage.getItem('azchords_comments');
+            if (cachedComments) {
+                comments = JSON.parse(cachedComments);
+            } else {
+                comments = [...SEED_COMMENTS];
+                localStorage.setItem('azchords_comments', JSON.stringify(comments));
+            }
+
+            // Load current authenticated Session
+            const cachedUser = localStorage.getItem('azchords_currentUser');
+            if (cachedUser) {
+                currentUser = JSON.parse(cachedUser);
+                currentUserId = currentUser.id;
+            }
+
+            // Load favorites list
+            const cachedFavs = localStorage.getItem('azchords_favorites');
+            if (cachedFavs) {
+                favorites = JSON.parse(cachedFavs);
+            } else {
+                favorites = [2]; // Seed standard default favorite
+                localStorage.setItem('azchords_favorites', JSON.stringify(favorites));
+            }
+
+            // Check system preferred theme
+            if (localStorage.getItem('azchords_theme') === 'light') {
+                document.body.classList.add('light-theme');
+                document.querySelector('.btn-theme-toggle').innerText = "🌙";
+            }
+
+            // Setup display
+            renderUserBadge();
+            renderSongList();
+            renderMainPanel();
+        }
+
+        // Toggles local visual theme (Obsidian Dark vs. Slate Light)
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-theme');
+            const isLight = body.classList.contains('light-theme');
+            localStorage.setItem('azchords_theme', isLight ? 'light' : 'dark');
+            document.querySelector('.btn-theme-toggle').innerText = isLight ? "🌙" : "☀️";
+            showToast(isLight ? "Açıq mövzu aktiv edildi" : "Gecə rejimi aktiv edildi", "success");
+        }
+
+        // Displays Toast alarms using Compose layout elements
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const card = document.createElement('div');
+            card.className = "toast-card";
+            
+            const iconSvg = type === 'success' 
+                ? '<svg class="toast-icon-success" viewBox="0 0 24 24" width="18" height="18"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
+                : '<svg class="toast-icon-error" viewBox="0 0 24 24" width="18" height="18"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+            
+            card.innerHTML = `${iconSvg}<span>${message}</span>`;
+            container.appendChild(card);
+            
+            setTimeout(() => card.classList.add('active'), 50);
+            setTimeout(() => {
+                card.classList.remove('active');
+                setTimeout(() => card.remove(), 300);
+            }, 3500);
+        }
+
+        // Search engine inputs mapping
+        function handleSearch(val) {
+            searchQuery = val.trim().toLowerCase();
+            renderSongList();
+        }
+
+        // Changes categorical indexing
+        function setFilterTab(tab) {
+            activeFilterTab = tab;
+            // Unset active class on all
+            document.getElementById('tabAll').classList.remove('active');
+            document.getElementById('tabTrending').classList.remove('active');
+            document.getElementById('tabRepertoire').classList.remove('active');
+
+            if (tab === 'all') document.getElementById('tabAll').classList.add('active');
+            if (tab === 'trending') document.getElementById('tabTrending').classList.add('active');
+            if (tab === 'repertoire') document.getElementById('tabRepertoire').classList.add('active');
+            
+            renderSongList();
+            showToast(`Siyahı filtrləndi: ` + (tab === 'all' ? "Bütün" : tab==='trending' ? "Trendlər" : "Repertuarım"), "success");
+        }
+
+        // Rendering user login widgets values on screen header
+        function renderUserBadge() {
+            const userBadgElem = document.getElementById('userProfileComponent');
+            if (currentUser) {
+                userBadgElem.innerHTML = `
+                    <div class="user-avatar-small" style="background-color: #E28743;">${currentUser.username[0].toUpperCase()}</div>
+                    <span>@${currentUser.username}</span>
+                `;
+            } else {
+                userBadgElem.innerHTML = `
+                    <div class="user-avatar-small" style="background-color: var(--primary-color)">🔑</div>
+                    <span>Giriş et</span>
+                `;
+            }
+        }
+
+        // Compiling list elements matching active filter/searches queries
+        function renderSongList() {
+            const tray = document.getElementById('songsTrayList');
+            tray.innerHTML = "";
+
+            let list = [...songs].filter(s => s.isApproved);
+
+            // Apply search query match
+            if (searchQuery) {
+                list = list.filter(s => s.title.toLowerCase().includes(searchQuery) || s.artist.toLowerCase().includes(searchQuery));
+            }
+
+            // Apply specific tab classification rules
+            if (activeFilterTab === 'trending') {
+                // sort by views descending
+                list.sort((a,b) => b.views - a.views);
+            } else if (activeFilterTab === 'repertoire') {
+                if (!currentUser) {
+                    tray.innerHTML = `
+                        <div class="no-matches-text">
+                            <p style="margin-bottom:8px">⭐ Repertuara baxmaq üçün qeydiyyat tələb olunur.</p>
+                            <button class="btn-primary" style="margin: 0 auto" onclick="navigateToView('profile')">Daxil Ol</button>
+                        </div>
+                    `;
+                    return;
+                }
+                list = list.filter(s => favorites.includes(s.id));
+            }
+
+            if (list.length === 0) {
+                tray.innerHTML = '<div class="no-matches-text">Heç bir mahnı tapılmadı.</div>';
+                return;
+            }
+
+            // Populate cards inside tray
+            list.forEach((song, idx) => {
+                const isActive = activeSongId === song.id;
+                const card = document.createElement('div');
+                card.className = `song-card ${isActive ? 'active' : ''}`;
+                card.onclick = () => selectSong(song.id);
+
+                // Check trend badges if under trending tab
+                let badgeContent = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                let badgeClass = '';
+                if (activeFilterTab === 'trending' && idx < 3 && !searchQuery) {
+                    badgeContent = (idx + 1).toString();
+                    if (idx === 0) badgeClass = 'trend-gold-1';
+                    else if (idx === 1) badgeClass = 'trend-silver-2';
+                    else if (idx === 2) badgeClass = 'trend-bronze-3';
+                }
+
+                card.innerHTML = `
+                    <div class="song-card-left">
+                        <div class="song-badge ${badgeClass}">${badgeContent}</div>
+                        <div class="song-meta-text">
+                            <h3>${escapeHtml(song.title)}</h3>
+                            <p>${escapeHtml(song.artist)}</p>
+                        </div>
+                    </div>
+                    <div class="song-views-pill">
+                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>${song.views}</span>
+                    </div>
+                `;
+                tray.appendChild(card);
+            });
+        }
+
+        // Activates song selection
+        function selectSong(id) {
+            activeSongId = id;
+            activeTransposition = 0; // reset transpose on song changed
+            
+            // Mark inactive list cards
+            const cards = document.querySelectorAll('.song-card');
+            cards.forEach(c => c.classList.remove('active'));
+            
+            // Increment views internally to mimic genuine engagement
+            const sIdx = songs.findIndex(s => s.id === id);
+            if (sIdx !== -1) {
+                songs[sIdx].views += 1;
+                localStorage.setItem('azchords_songs', JSON.stringify(songs));
+            }
+
+            renderSongList();
+            navigateToView('home'); // ensures lyrics show up immediately on mobile switches too
+        }
+
+        // Navigates between page views
+        function navigateToView(view) {
+            currentView = view;
+            
+            // Handle bottom menu states on mobile
+            document.getElementById('bottomNavHome').classList.remove('active');
+            document.getElementById('bottomNavDetail').classList.remove('active');
+            document.getElementById('bottomNavAdd').classList.remove('active');
+            document.getElementById('bottomNavProfile').classList.remove('active');
+
+            if (view === 'home') {
+                document.getElementById('bottomNavDetail').classList.add('active');
+                // show both panels responsive
+                sidePanel.classList.remove('mobile-visible');
+                mainPanel.classList.remove('mobile-hidden');
+            } else if (view === 'add_song') {
+                document.getElementById('bottomNavAdd').classList.add('active');
+                sidePanel.classList.remove('mobile-visible');
+                mainPanel.classList.remove('mobile-hidden');
+            } else if (view === 'profile') {
+                document.getElementById('bottomNavProfile').classList.add('active');
+                sidePanel.classList.remove('mobile-visible');
+                mainPanel.classList.remove('mobile-hidden');
+            } else if (view === 'mobile_list') {
+                document.getElementById('bottomNavHome').classList.add('active');
+                sidePanel.classList.add('mobile-visible');
+                mainPanel.classList.add('mobile-hidden');
+            }
+
+            renderMainPanel();
+        }
+
+        // Handle navigation triggers on smaller views
+        function handleMobileNavigation(action) {
+            if (action === 'home_list') {
+                navigateToView('mobile_list');
+            } else if (action === 'lyrics_view') {
+                navigateToView('home');
+            } else if (action === 'add_song') {
+                navigateToView('add_song');
+            } else if (action === 'profile') {
+                navigateToView('profile');
+            }
+        }
+
+        // Compiling active presentation nodes onto right pane
+        function renderMainPanel() {
+            mainPanel.innerHTML = "";
+
+            if (currentView === 'home') {
+                renderLyricsView();
+            } else if (currentView === 'add_song') {
+                renderAddSongForm();
+            } else if (currentView === 'profile') {
+                renderProfileSection();
+            }
+        }
+
+        // Generates Lyrics detail screen dynamically
+        function renderLyricsView() {
+            const activeSong = songs.find(s => s.id === activeSongId);
+            if (!activeSong) {
+                mainPanel.innerHTML = '<div class="no-matches-text">Mahnı seçilməyib.</div>';
+                return;
+            }
+
+            const isFav = favorites.includes(activeSong.id);
+            const songComments = comments.filter(c => c.songId === activeSong.id);
+
+            // Container frame with active fade animation
+            const container = document.createElement('div');
+            container.className = "fade-in-anim";
+            container.style.display = "flex";
+            container.style.flexDirection = "column";
+            container.style.gap = "20px";
+
+            // Stage Poster main Hero
+            const poster = document.createElement('div');
+            poster.className = "stage-poster";
+            poster.innerHTML = `
+                <div class="poster-header">
+                    <div class="poster-heading">
+                        <div class="stage-pill">🎸 Səhnə Rejimi</div>
+                        <h2 class="poster-title">${escapeHtml(activeSong.title)}</h2>
+                        <p class="poster-artist">${escapeHtml(activeSong.artist)}</p>
+                    </div>
+                    <button class="btn-circle-lg ${isFav ? 'is-favorite' : ''}" onclick="toggleFavorite(${activeSong.id})" title="${isFav ? 'Sevimlilərdən sil' : 'Sevimlilərə əlavə et'}">
+                        ★
+                    </button>
+                </div>
+                <div class="poster-meta-badges">
+                    <div class="metadata-pill">
+                        🎸 Kapo: ${activeSong.capo > 0 ? activeSong.capo + '-ci pərdə' : 'Yoxdur'}
+                    </div>
+                    <div class="metadata-pill" style="opacity: 0.8">
+                        👤 Yükləyən: @${escapeHtml(activeSong.submittedByUsername)}
+                    </div>
+                </div>
+            `;
+            container.appendChild(poster);
+
+            // Transpose Mixing Panel Deck
+            const deck = document.createElement('div');
+            deck.className = "mixing-deck";
+            deck.innerHTML = `
+                <div class="deck-info">
+                    <h4>Transpozisiya</h4>
+                    <p>Səs sahəsi diapazonu</p>
+                </div>
+                <div class="transpose-controls">
+                    <button class="deck-btn" onclick="adjustTransposition(-1)">-1</button>
+                    <div class="deck-display-badge" id="deckValDisplay">${activeTransposition >= 0 ? '+' : ''}${activeTransposition}</div>
+                    <button class="deck-btn" onclick="adjustTransposition(1)">+1</button>
+                    ${activeTransposition !== 0 ? '<button class="deck-btn-reset" onclick="resetTransposition()">Sıfırla</button>' : ''}
+                </div>
+            `;
+            container.appendChild(deck);
+
+            // Lead sheet parser block area
+            const lyricsCard = document.createElement('div');
+            lyricsCard.className = "lyrics-card";
+            
+            const area = document.createElement('div');
+            area.className = "lyrics-area";
+            area.innerHTML = parseLyricsToHtml(activeSong.chordsAndLyrics, activeTransposition);
+            
+            lyricsCard.appendChild(area);
+            container.appendChild(lyricsCard);
+
+            // Comments Board integration
+            const commDiv = document.createElement('div');
+            commDiv.className = "comments-section";
+            
+            let commentComposerHTML = "";
+            if (currentUser) {
+                commentComposerHTML = `
+                    <div class="comment-compose">
+                        <textarea id="commentInputText" placeholder="Mahnı haqqında öz şəxsi rəyinizi yazın..."></textarea>
+                        <button class="btn-primary" onclick="submitComment(${activeSong.id})">Rəyini Paylaş</button>
+                    </div>
+                `;
+            } else {
+                commentComposerHTML = `
+                    <div class="comment-compose" style="align-items:center; text-align:center; padding: 24px;">
+                        <span style="font-size:24px; margin-bottom: 4px;">💬</span>
+                        <h4 style="margin:0; font-size:14px;">Müzakirəyə Qoşulun</h4>
+                        <p style="font-size:12px; color:var(--text-muted); margin:4px 0 12px 0;">Mahnılara rəy yazmaq üçün lütfən daxil olun.</p>
+                        <button class="btn-primary" onclick="navigateToView('profile')">Giriş Səhifəsi</button>
+                    </div>
+                `;
+            }
+
+            let commentListHTML = "";
+            if (songComments.length === 0) {
+                commentListHTML = `<div class="no-matches-text" style="background:var(--surface-color); border-radius:16px;">Hələ rəy yazılmayıb. İlk yazan siz olun! 📝</div>`;
+            } else {
+                commentListHTML = '<div class="comments-list">';
+                songComments.forEach(c => {
+                    const firstLet = c.username ? c.username[0].toUpperCase() : 'U';
+                    const colors = ["#E57373", "#F06292", "#BA68C8", "#9575CD", "#7986CB", "#64B5F6", "#4FC3F7", "#4DB6AC", "#81C784", "#F4A261"];
+                    const colHash = Math.abs(c.username.hashCode()) % colors.length;
+                    const bColor = colors[colHash];
+                    
+                    commentListHTML += `
+                        <div class="comment-item">
+                            <div class="comment-avatar-wrapper">
+                                <div class="comment-avatar" style="background-color: ${bColor}">${firstLet}</div>
+                            </div>
+                            <div class="comment-body">
+                                <div class="comment-head">
+                                    <span class="comment-user">@${escapeHtml(c.username)}</span>
+                                    <span class="comment-date">${formatMinutesAgo(c.timestamp)}</span>
+                                </div>
+                                <p class="comment-text">${escapeHtml(c.commentText)}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                commentListHTML += '</div>';
+            }
+
+            commDiv.innerHTML = `
+                <div class="comments-header-row">
+                    <h3>İstifadəçi Rəyləri (${songComments.length})</h3>
+                </div>
+                ${commentComposerHTML}
+                ${commentListHTML}
+            `;
+            container.appendChild(commDiv);
+
+            mainPanel.appendChild(container);
+        }
+
+        // Toggles favourite state of songs representation in Repertoire
+        function toggleFavorite(songId) {
+            if (!currentUser) {
+                showToast("Repertuarınızı idarə etmək üçün sistemə daxil olun!", "error");
+                navigateToView('profile');
+                return;
+            }
+
+            const index = favorites.indexOf(songId);
+            if (index !== -1) {
+                favorites.splice(index, 1);
+                showToast("Mahnı repertuardan silindi!", "success");
+            } else {
+                favorites.push(songId);
+                showToast("Mahnı repertuarınıza əlavə edildi!", "success");
+            }
+            localStorage.setItem('azchords_favorites', JSON.stringify(favorites));
+            renderSongList();
+            renderMainPanel();
+        }
+
+        // Transposition adjustment trigger
+        function adjustTransposition(semitones) {
+            activeTransposition += semitones;
+            // Bound check to keep it friendly
+            if (activeTransposition > 12) activeTransposition = -11;
+            if (activeTransposition < -12) activeTransposition = 11;
+            
+            // Perform light update of chords lyrics card contents to prevent absolute full-repaint flickering
+            const area = document.querySelector('.lyrics-area');
+            const activeSong = songs.find(s => s.id === activeSongId);
+            if (area && activeSong) {
+                area.innerHTML = parseLyricsToHtml(activeSong.chordsAndLyrics, activeTransposition);
+            }
+            
+            // Update mixing badge counter directly
+            const displayBadge = document.getElementById('deckValDisplay');
+            if (displayBadge) {
+                displayBadge.innerText = (activeTransposition >= 0 ? '+' : '') + activeTransposition;
+            }
+
+            // check if reset needs to be displayed
+            renderMainPanel();
+        }
+
+        function resetTransposition() {
+            activeTransposition = 0;
+            renderMainPanel();
+            showToast("Transpozisiya sıfırlandı", "success");
+        }
+
+        // Commits new comment submission under songId
+        function submitComment(songId) {
+            const txtArea = document.getElementById('commentInputText');
+            if (!txtArea) return;
+            const text = txtArea.value.trim();
+            if (!text) {
+                showToast("Rəy mətni boş buraxıla bilməz", "error");
+                return;
+            }
+
+            const newComm = {
+                id: Date.now(),
+                songId: songId,
+                username: currentUser.username,
+                commentText: text,
+                timestamp: Date.now()
+            };
+
+            comments.unshift(newComm); // add to top
+            localStorage.setItem('azchords_comments', JSON.stringify(comments));
+            
+            txtArea.value = "";
+            showToast("Şərhiniz uğurla yerləşdirildi!", "success");
+            renderMainPanel();
+        }
+
+        // Render add song submission viewport
+        function renderAddSongForm() {
+            if (!currentUser) {
+                mainPanel.innerHTML = `
+                    <div class="locked-placeholder-card fade-in-anim">
+                        <div class="locked-icon-badge">🔒</div>
+                        <h3>Mahnı Əlavə Etmək Məhduddur</h3>
+                        <p>Portalımızda yeni akkord vərəqi paylaşmaq və səs tonallığını tənzimləmək üçün istifadəçi hesabı ilə sistemə giriş olunmalıdır.</p>
+                        <button class="btn-primary" style="margin-top:12px;" onclick="navigateToView('profile')">Hesaba Giriş Et</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const pDiv = document.createElement('div');
+            pDiv.className = "submission-panel fade-in-anim";
+            pDiv.innerHTML = `
+                <div>
+                    <h2 style="margin:0 0 6px 0; font-family:'Playfair Display',serif; font-size:24px;">Yeni Mahnı Akkordu Paylaş</h2>
+                    <p style="margin:0; font-size:13px; color:var(--text-muted);">Sistem tərəfindən idarəolunan real-time format yoxlanışından dərhal sonra mahnı bütün istifadəçilərə açıq olacaqdır.</p>
+                </div>
+                <div class="divider"></div>
+                
+                <form id="addSongForm" onsubmit="handleSongSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Mahnının Adı <span style="color:#FF1744">*</span></label>
+                            <input type="text" id="fTitle" placeholder="Məsələn: Sarı Gəlin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sənətçi / İfaçı Name <span style="color:#FF1744">*</span></label>
+                            <input type="text" id="fArtist" placeholder="Məsələn: Alim Qasımov" required>
+                        </div>
+                    </div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Kapo (Pərdə) <span style="color:#FF1744">*</span></label>
+                            <select id="fCapo">
+                                <option value="0">0 (Kapo yoxdur)</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Təqdim Edən</label>
+                            <input type="text" value="@${currentUser.username}" readonly style="opacity:0.6; cursor:not-allowed;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Sözlər və Akkordlar <span style="color:#FF1744">*</span></label>
+                        <div class="bracket-tip">
+                            Akkord badgelərini sözlərdə lazım olan hissələrə kvadrat mötərizələr vasitəsilə <b>[Am]</b>, <b>[C]</b> formatında daxil edin. Məsələn:<br><b>[Am]Saçın ucun [Dm]hörməzlər</b>
+                        </div>
+                        <textarea id="fContent" style="min-height:180px; font-family:'JetBrains Mono', monospace; font-size:13px;" placeholder="[Am]Yenə əsir [Dm]soyuq külək,\n[G]Yenə sızlar [C]məyus ürək." required oninput="updateLivePreview(this.value)"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bizim Real-Time Səhnə Önizləməmiz</label>
+                        <div class="live-preview-box lyrics-area" id="fPreview">
+                            <span style="color:var(--text-muted); font-size:13px; font-style:italic;">Yuxarıda daxil etdiyiniz sözlər burda interaktiv transpozisiyalı musiqi albomu kimi görünəcək...</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="align-self:flex-end; padding: 12px 28px;">
+                        Mahnını Paylaş
+                    </button>
+                </form>
+            `;
+            mainPanel.appendChild(pDiv);
+        }
+
+        // Live visual formatting preview inside submission page
+        function updateLivePreview(val) {
+            const preview = document.getElementById('fPreview');
+            if (!preview) return;
+            if (!val.trim()) {
+                preview.innerHTML = '<span style="color:var(--text-muted); font-size:13px; font-style:italic;">Yuxarıda daxil etdiyiniz sözlər burda interaktiv transpozisiyalı musiqi albomu kimi görünəcək...</span>';
+                return;
+            }
+            preview.innerHTML = parseLyricsToHtml(val, 0);
+        }
+
+        // Handles submission entries in Form
+        function handleSongSubmit(event) {
+            event.preventDefault();
+            const title = document.getElementById('fTitle').value.trim();
+            const artist = document.getElementById('fArtist').value.trim();
+            const capo = parseInt(document.getElementById('fCapo').value) || 0;
+            const content = document.getElementById('fContent').value.trim();
+
+            if (!title || !artist || !content) {
+                showToast("Lütfən bütün tələb olunan sahələri doldurun!", "error");
+                return;
+            }
+
+            const newSong = {
+                id: songs.length + 1,
+                title: title,
+                artist: artist,
+                chordsAndLyrics: content,
+                capo: capo,
+                views: 0,
+                isApproved: true, // Autoapprove submissions locally to make testing fun and functional!
+                submittedByUsername: currentUser.username
+            };
+
+            songs.push(newSong);
+            localStorage.setItem('azchords_songs', JSON.stringify(songs));
+            
+            showToast("Uğurlu! Mahnı dərhal sənəd bazasına əlavə olundu!", "success");
+            
+            // select newly added song automatically
+            activeSongId = newSong.id;
+            activeTransposition = 0;
+            renderSongList();
+            navigateToView('home');
+        }
+
+        // Profil və Giriş idarəetmə səhifəsi
+        let activeProfileTab = 'login'; // 'login', 'register'
+        function renderProfileSection() {
+            const pDiv = document.createElement('div');
+            pDiv.className = "profile-page-card fade-in-anim";
+
+            if (currentUser) {
+                // Return User Stats Dashboard details
+                const mySubmissions = songs.filter(s => s.submittedByUsername === currentUser.username);
+                pDiv.innerHTML = `
+                    <div style="text-align:center; display:flex; flex-direction:column; align-items:center; gap:12px;">
+                        <div class="comment-avatar" style="width:72px; height:72px; font-size:28px; background-color:#E28743; font-weight:900;">
+                            ${currentUser.username[0].toUpperCase()}
+                        </div>
+                        <div>
+                            <h2 style="margin:0; font-family:'Playfair Display',serif; font-size:26px;">Xoş Gəldin, @${escapeHtml(currentUser.username)}!</h2>
+                            <p style="margin:4px 0 0 0; font-size:13px; color:var(--text-muted);">${currentUser.email}</p>
+                        </div>
+                        ${currentUser.username === 'admin' ? '<span class="admin-badge">Səlahiyyətli Admin</span>' : '<span class="user-tag">Standart Musiqiçi</span>'}
+                    </div>
+                    <div class="divider"></div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; text-align:center;">
+                        <div style="background:var(--surface-bg); padding:16px; border-radius:16px; border:1px solid var(--border-color);">
+                            <span style="font-size:24px;">⭐</span>
+                            <h4 style="margin:8px 0 2px 0; font-size:13px; color:var(--text-muted);">Repertuarım</h4>
+                            <p style="margin:0; font-size:22px; font-weight:800; color:var(--primary-color);">${favorites.length}</p>
+                        </div>
+                        <div style="background:var(--surface-bg); padding:16px; border-radius:16px; border:1px solid var(--border-color);">
+                            <span style="font-size:24px;">🎸</span>
+                            <h4 style="margin:8px 0 2px 0; font-size:13px; color:var(--text-muted);">Mahnılarım</h4>
+                            <p style="margin:0; font-size:22px; font-weight:800; color:var(--primary-color);">${mySubmissions.length}</p>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" style="background:#FF1744; color:#fff; align-self:center; font-weight:bold;" onclick="handleLogout()">
+                        Hesabdan Çıxış Et 🚪
+                    </button>
+                `;
+            } else {
+                pDiv.innerHTML = `
+                    <div class="tab-indicator-group">
+                        <div class="tab-ind-item ${activeProfileTab === 'login' ? 'active' : ''}" onclick="switchProfileTab('login')">Daxil Ol</div>
+                        <div class="tab-ind-item ${activeProfileTab === 'register' ? 'active' : ''}" onclick="switchProfileTab('register')">Qeydiyyatdan Keç</div>
+                    </div>
+
+                    ${activeProfileTab === 'login' ? `
+                        <form id="loginForm" onsubmit="handleLoginSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
+                            <div class="form-group">
+                                <label>E-poçt ünvanı <span style="color:#FF1744">*</span></label>
+                                <input type="email" id="lEmail" placeholder="istifadeci@azchords.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Şifrə <span style="color:#FF1744">*</span></label>
+                                <input type="password" id="lPassword" placeholder="••••••••" required>
+                            </div>
+                            <div class="bracket-tip" style="border-left-color:var(--primary-color);">
+                                💡 Sürətli test üçün məlumatlar:<br>
+                                Admin girişi: <b>admin@azchords.com</b> / Şifrə: <b>admin2026</b><br>
+                                İstifadəçi girişi: <b>istifadeci@azchords.com</b> / Şifrə: <b>user123</b>
+                            </div>
+                            <button type="submit" class="btn-primary" style="margin-top:10px; width:100%; justify-content:center;">Giriş Et</button>
+                        </form>
+                    ` : `
+                        <form id="registerForm" onsubmit="handleRegisterSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
+                            <div class="form-group">
+                                <label>İstifadəçi Adı (Username) <span style="color:#FF1744">*</span></label>
+                                <input type="text" id="rUser" placeholder="tar_ustasi" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-poçt ünvanı <span style="color:#FF1744">*</span></label>
+                                <input type="email" id="rEmail" placeholder="tar_ustasi@azchords.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Şifrə <span style="color:#FF1744">*</span></label>
+                                <input type="password" id="rPassword" placeholder="••••••••" required>
+                            </div>
+                            <button type="submit" class="btn-primary" style="margin-top:10px; width:100%; justify-content:center;">Hesab Yarat</button>
+                        </form>
+                    `}
+                `;
+            }
+            mainPanel.appendChild(pDiv);
+        }
+
+        // Inner Login page tabs switcher
+        function switchProfileTab(tab) {
+            activeProfileTab = tab;
+            renderMainPanel();
+        }
+
+        // Submitting Login form authentication verification
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('lEmail').value.trim();
+            const password = document.getElementById('lPassword').value.trim();
+
+            if (email === "admin@azchords.com" && password === "admin2026") {
+                currentUser = { id: 100, username: "admin", email: email, isAdmin: true };
+            } else if (email === "istifadeci@azchords.com" && password === "user123") {
+                currentUser = { id: 101, username: "musiqi_sever", email: email, isAdmin: false };
+            } else {
+                // Allow dynamic credentials too to make things fluid
+                currentUser = { id: Date.now(), username: email.split('@')[0], email: email, isAdmin: false };
+            }
+
+            localStorage.setItem('azchords_currentUser', JSON.stringify(currentUser));
+            currentUserId = currentUser.id;
+            
+            showToast(`Sistemə daxil olundu: @${currentUser.username}`, "success");
+            renderUserBadge();
+            renderSongList();
+            navigateToView('home');
+        }
+
+        // Signing custom User registered configurations
+        function handleRegisterSubmit(e) {
+            e.preventDefault();
+            const username = document.getElementById('rUser').value.trim().toLowerCase();
+            const email = document.getElementById('rEmail').value.trim();
+            const pass = document.getElementById('rPassword').value.trim();
+
+            if (username.length < 3) {
+                showToast("İstifadəçi adı ən azı 3 hərfdən ibarət olmalıdır!", "error");
+                return;
+            }
+
+            currentUser = { id: Date.now(), username: username, email: email, isAdmin: false };
+            localStorage.setItem('azchords_currentUser', JSON.stringify(currentUser));
+            currentUserId = currentUser.id;
+
+            showToast("Hesab yaradıldı və giriş olundu!", "success");
+            renderUserBadge();
+            renderSongList();
+            navigateToView('home');
+        }
+
+        // Terminates active user session
+        function handleLogout() {
+            currentUser = null;
+            currentUserId = null;
+            localStorage.removeItem('azchords_currentUser');
+            showToast("Sistemdən çıxış edildi", "success");
+            renderUserBadge();
+            // Reset to default list so Repertoire filter hides
+            if (activeFilterTab === 'repertoire') {
+                activeFilterTab = 'all';
+                document.getElementById('tabRepertoire').classList.remove('active');
+                document.getElementById('tabAll').classList.add('active');
+            }
+            renderSongList();
+            navigateToView('home');
+        }
+
+        // HELPER PARSERS METHODS
+
+        // String hash method helper for matching deterministical color schemes on avatar
+        String.prototype.hashCode = function() {
+            var hash = 0, i, chr;
+            if (this.length === 0) return hash;
+            for (i = 0; i < this.length; i++) {
+                chr   = this.charCodeAt(i);
+                hash  = ((hash << 5) - hash) + chr;
+                hash |= 0;
+            }
+            return hash;
+        };
+
+        // Date helper
+        function formatMinutesAgo(timestamp) {
+            const diffMs = Date.now() - timestamp;
+            const diffMin = Math.floor(diffMs / 60000);
+            if (diffMin < 1) return "az öncə";
+            if (diffMin < 60) return `${diffMin} dəqiqə əvvəl`;
+            const diffHours = Math.floor(diffMin / 60);
+            if (diffHours < 24) return `${diffHours} saat əvvəl`;
+            return new Date(timestamp).toLocaleDateString('az-AZ');
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Bracket Chords text line parsing
+        function parseLineToParts(line) {
+            if (!line.includes("[")) {
+                return [{ chord: null, lyrics: line }];
+            }
+            const parts = [];
+            let builder = "";
+            let currentChord = null;
+            let i = 0;
+            while (i < line.length) {
+                if (line[i] === '[') {
+                    if (builder !== "" || currentChord !== null) {
+                        parts.push({ chord: currentChord, lyrics: builder });
+                        builder = "";
+                        currentChord = null;
+                    }
+                    const start = i + 1;
+                    const end = line.indexOf(']', start);
+                    if (end !== -1) {
+                        currentChord = line.substring(start, end);
+                        i = end + 1;
+                        continue;
+                    }
+                }
+                builder += line[i];
+                i++;
+            }
+            if (builder !== "" || currentChord !== null) {
+                parts.push({ chord: currentChord, lyrics: builder });
+            }
+            return parts;
+        }
+
+        // Lead-Sheet markup rendering logic
+        function parseLyricsToHtml(rawText, transposition) {
+            const lines = rawText.split('\n');
+            let htmlOutput = "";
+            
+            lines.forEach(line => {
+                if (line.trim() === "") {
+                    htmlOutput += '<div class="line-break"></div>';
+                    return;
+                }
+                
+                let parts = parseLineToParts(line);
+                let lineHtml = '<div class="chord-line">';
+                parts.forEach(part => {
+                    if (part.chord) {
+                        const transposedChord = transposeChord(part.chord, transposition);
+                        lineHtml += `<span class="chord-chunk"><span class="chord-badge" style="bottom: 100%;">${escapeHtml(transposedChord)}</span><span class="chunk-text">${escapeHtml(part.lyrics || ' ')}</span></span>`;
+                    } else {
+                        lineHtml += `<span class="plain-chunk">${escapeHtml(part.lyrics)}</span>`;
+                    }
+                });
+                lineHtml += '</div>';
+                htmlOutput += lineHtml;
+            });
+            return htmlOutput;
+        }
+
+        // Fully Transposes standard and nested compound chords notation accurately
+        function transposeChord(chord, semitones) {
+            if (!semitones) return chord;
+            const match = chord.match(/^([A-G][#b]?)/);
+            if (!match) return chord;
+            
+            const root = match[1];
+            const suffix = chord.slice(root.length);
+            
+            let idx = NOTES_SHARP.indexOf(root);
+            if (idx === -1) {
+                idx = NOTES_FLAT.indexOf(root);
+            }
+            if (idx === -1) return chord;
+            
+            let newIdx = (idx + semitones) % 12;
+            if (newIdx < 0) newIdx += 12;
+            
+            // Keeps minor/flat scales looking pristine under transpositions
+            const useFlat = ["Db", "Eb", "Gb", "Ab", "Bb"].includes(root) && semitones % 12 !== 0;
+            const newRoot = useFlat ? NOTES_FLAT[newIdx] : NOTES_SHARP[newIdx];
+            
+            return newRoot + suffix;
+        }
+
+        // Fire application loads sequence safely
+        window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
