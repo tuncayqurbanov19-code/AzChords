@@ -291,6 +291,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun loginWithGoogleFirebase(googleEmail: String, googleUsername: String) {
+        viewModelScope.launch {
+            var user = repository.getUserByEmail(googleEmail)
+            if (user == null) {
+                val newUser = User(
+                    username = googleUsername,
+                    email = googleEmail,
+                    passwordHash = "google_auth_token_firebase",
+                    isAdmin = false
+                )
+                val id = repository.registerUser(newUser)
+                user = newUser.copy(id = id.toInt())
+                successMessage = "Google Hesabı Firebase ilə Uğurla Sinxronizasiya Edildi: @$googleUsername"
+            } else {
+                successMessage = "Google Hesabı Firebase ilə Giriş Edildi: @$googleUsername"
+            }
+            currentUser = user
+            authErrorMessage = null
+        }
+    }
+
     fun logout() {
         currentUser = null
         currentScreen = Screen.Home

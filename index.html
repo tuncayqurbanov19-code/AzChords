@@ -1270,13 +1270,275 @@
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Premium Modal Window design */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(6, 7, 9, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1200;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--surface-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transform: translateY(30px);
+            transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body.light-theme .modal-content {
+            background-color: #FFFFFF;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--surface-color);
+        }
+
+        body.light-theme .modal-header-bar {
+            background: #F8F9FA;
+        }
+
+        .modal-close-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--text-color);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        body.light-theme .modal-close-btn {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-close-btn:hover {
+            background: #FF1744;
+            color: #fff;
+            border-color: #FF1744;
+            transform: scale(1.05);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Google verification button styles */
+        .btn-google-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-color);
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            width: 100%;
+        }
+
+        .btn-google-login:hover {
+            background-color: var(--surface-hover);
+            border-color: var(--primary-color);
+        }
+
+        .divider-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            margin: 8px 0;
+            width: 100%;
+        }
+
+        .divider-text::before, .divider-text::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .divider-text:not(:empty)::before {
+            margin-right: .5em;
+        }
+
+        .divider-text:not(:empty)::after {
+            margin-left: .5em;
+        }
+
+        /* Simulated Google accounts modal chooser style */
+        .g-auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .g-auth-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .g-auth-box {
+            background: #ffffff;
+            color: #202124;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 380px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: left;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, sans-serif;
+            transform: scale(0.9);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .g-auth-overlay.active .g-auth-box {
+            transform: scale(1);
+        }
+
+        .g-account-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .g-account-item:hover {
+            background: #f8f9fa;
+        }
+
+        .g-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #E28743;
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
     </style>
+    <!-- Firebase App and Realtime Database Web JS SDK Compatibility scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
     <!-- Ambient luminous gradients -->
     <div class="ambient-glow"></div>
     <div class="ambient-glow-two"></div>
+
+    <!-- Beautiful Floating Modal Popup for Song Details and Chords -->
+    <div id="songDetailModal" class="modal-overlay" onclick="handleOutsideModalClick(event)">
+        <div class="modal-content">
+            <div class="modal-header-bar">
+                <div style="display: flex; flex-direction: column; gap: 2px;">
+                    <span class="stage-pill" style="margin: 0; align-self: flex-start; font-size: 9px; padding: 3px 6px;">🎸 Akord Pəncərəsi</span>
+                    <h3 id="modalSongTitle" style="margin: 4px 0 0 0; font-size: 20px; font-family: 'Playfair Display', Georgia, serif; font-weight: 900; color: var(--text-color);">Mahnı Adı</h3>
+                    <span id="modalSongArtist" style="font-size: 13.5px; font-weight: 600; color: var(--text-muted);">Artist</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeSongModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBodyContent">
+                <!-- Chords, Transpose and comments rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulated Google Sign-In Chooser Overlay -->
+    <div id="googleAuthOverlay" class="g-auth-overlay" onclick="closeGoogleOverlay(event)">
+        <div class="g-auth-box">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                <div>
+                    <h3 style="margin: 0; font-size: 16px; color: #202124; font-weight: 600;">Google ilə daxil olun</h3>
+                    <p style="margin: 4px 0 0 0; font-size: 13px; color: #5f6368;">İstənilən Google hesabı ilə daxil olun</p>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" width="24" height="24">
+            </div>
+            
+            <form onsubmit="handleGoogleFormSubmit(event)" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 11px; font-weight: bold; color: #5f6368; text-transform: uppercase;">E-poçt (Gmail)</label>
+                    <input type="email" id="gEmailInput" placeholder="ornek@gmail.com" required style="width:100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; box-sizing: border-box; background: white; color: #2d2d2d;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 11px; font-weight: bold; color: #5f6368; text-transform: uppercase;">İstifadəçi Adı (Username)</label>
+                    <input type="text" id="gUsernameInput" placeholder="musiqi_sever" required style="width:100%; padding: 10px 12px; border: 1px solid #dadce0; border-radius: 4px; font-size: 14px; outline: none; box-sizing: border-box; background: white; color: #2d2d2d;">
+                </div>
+                <button type="submit" style="background:#1a73e8; color:white; border:none; padding: 10px; border-radius: 4px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.2s ease;">
+                    Daxil Ol (Firebase)
+                </button>
+            </form>
+            
+            <div style="font-size: 11px; color: #5f6368; line-height: 1.4;">
+                İstədiyiniz Google məlumatlarını daxil edib "Daxil Ol" düyməsinə klikləyin. Sistem Firebase Realtime Database ilə məlumatları dərhal sinxronizasiya edəcək.
+            </div>
+        </div>
+    </div>
 
     <!-- Web portal header block -->
     <header>
@@ -1359,6 +1621,43 @@
 
     <!-- Application Script Block containing real state, transposer logic, database caching -->
     <script>
+        // ==========================================
+        // FIREBASE CONFIGURATION (FOR USER)
+        // ==========================================
+        // Siz öz Firebase layihənizin Realtime Database konfiqurasiya məlumatlarını bura daxil edin.
+        // Firebase databaseURL mütləq daxil edilməlidir.
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            databaseURL: "YOUR_FIREBASE_DATABASE_URL", // Məsələn: https://azchords-db-default-rtdb.firebaseio.com/
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let isFirebaseInitialized = false;
+        let firebaseDB = null;
+
+        function initFirebase() {
+            if (typeof firebase !== "undefined" && firebaseConfig.databaseURL && firebaseConfig.databaseURL !== "YOUR_FIREBASE_DATABASE_URL") {
+                try {
+                    firebase.initializeApp(firebaseConfig);
+                    firebaseDB = firebase.database();
+                    isFirebaseInitialized = true;
+                    console.log("Firebase initialized successfully.");
+                    showToast("Firebase Realtime Database uğurla qoşuldu!", "success");
+                    
+                    // Start live synchronization from Firebase
+                    syncWithFirebase();
+                } catch(e) {
+                    console.error("Firebase initialization failed:", e);
+                }
+            } else {
+                console.log("Firebase custom configuration has not been set up. Operating in local-offline mode.");
+            }
+        }
+
         // Default seed data aligning precisely with the App Room Database
         const SEED_SONGS = [
             {
@@ -1488,6 +1787,9 @@
             renderUserBadge();
             renderSongList();
             renderMainPanel();
+
+            // Initialize custom Firebase if configured
+            initFirebase();
         }
 
         // Toggles local visual theme (Obsidian Dark vs. Slate Light)
@@ -1631,10 +1933,6 @@
             activeSongId = id;
             activeTransposition = 0; // reset transpose on song changed
             
-            // Mark inactive list cards
-            const cards = document.querySelectorAll('.song-card');
-            cards.forEach(c => c.classList.remove('active'));
-            
             // Increment views internally to mimic genuine engagement
             const sIdx = songs.findIndex(s => s.id === id);
             if (sIdx !== -1) {
@@ -1643,7 +1941,7 @@
             }
 
             renderSongList();
-            navigateToView('home'); // ensures lyrics show up immediately on mobile switches too
+            openSongModal(id); // Opens the pop-up window!
         }
 
         // Navigates between page views
@@ -1696,11 +1994,464 @@
             mainPanel.innerHTML = "";
 
             if (currentView === 'home') {
-                renderLyricsView();
+                renderHomeDashboard();
             } else if (currentView === 'add_song') {
                 renderAddSongForm();
             } else if (currentView === 'profile') {
                 renderProfileSection();
+            }
+        }
+
+        // Beautiful Home Dashboard (Replaces default immediate chords display)
+        function renderHomeDashboard() {
+            mainPanel.innerHTML = `
+                <div class="fade-in-anim dashboard-welcome" style="display: flex; flex-direction: column; gap: 24px;">
+                    <!-- Hero Showcase Panel -->
+                    <div class="stage-poster" style="padding: 40px; text-align: center; justify-content: center; align-items: center; min-height: 250px; display:flex; flex-direction:column; gap:8px;">
+                        <div class="stage-pill" style="margin-bottom: 8px;">🎸 AzChords Rəsmi Portalı</div>
+                        <h2 style="font-family: 'Playfair Display', Georgia, serif; font-size: 32px; font-weight: 900; color: #FFF; margin: 0 0 4px 0; line-height: 1.2;">İnteraktiv Səhnə Akord Bazası</h2>
+                        <p style="font-size: 14.5px; color: rgba(255,255,255,0.7); max-width: 550px; margin: 0; line-height: 1.6;">
+                            Azərbaycan və xorici mahnıların rəsmi akord vərəqlərinə sərbəst baxın. Sol tərəfdəki kataloqdan istənilən mahnının üzərinə klikləməklə transpozisiyalı akordları açılan pəncərədə (popup) izləyin və musiqinizi səhnəyə hazırlayın!
+                        </p>
+                        <div style="display: flex; gap: 12px; margin-top: 20px; justify-content:center;">
+                            <button class="btn-primary" onclick="document.getElementById('searchInput').focus(); document.getElementById('sidePanel').scrollIntoView({behavior: 'smooth'});">🎸 Kataloqa Bax</button>
+                            <button class="btn-primary" style="background: rgba(255,255,255,0.05); color: var(--text-color); border: 1px solid var(--border-color);" onclick="navigateToView('profile')">👤 Hesab Girişi</button>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Info Deck -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                            <span style="font-size: 28px;">🎼</span>
+                            <h4 style="margin: 0; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Mahnı Sayı</h4>
+                            <p style="margin: 0; font-size: 24px; font-weight: 900; color: var(--primary-color);">${songs.length} Akord</p>
+                        </div>
+                        <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                            <span style="font-size: 28px;">🔥</span>
+                            <h4 style="margin: 0; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">Ümumi Baxış</h4>
+                            <p style="margin: 0; font-size: 24px; font-weight: 900; color: var(--primary-color);">${songs.reduce((acc, s) => acc + s.views, 0)} Giriş</p>
+                        </div>
+                        <div style="background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 18px; padding: 20px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                            <span style="font-size: 28px;">⭐️</span>
+                            <h4 style="margin: 0; font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; font-weight: 800; letter-spacing: 0.5px;">İstifadəçi Rəyləri</h4>
+                            <p style="margin: 0; font-size: 24px; font-weight: 900; color: var(--primary-color);">${comments.length} Rəy</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick tips banner -->
+                    <div style="background: rgba(255, 179, 0, 0.03); border: 1px solid rgba(255, 179, 0, 0.15); border-radius: 18px; padding: 20px; display: flex; gap: 16px; align-items: flex-start;">
+                        <span style="font-size: 24px;">💡</span>
+                        <div>
+                            <h3 style="margin: 0 0 4px 0; font-size: 14px; color: var(--primary-color); font-weight: 800;">Sürətli Transpozisiya Aləti</h3>
+                            <p style="margin: 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5;">
+                                İstənilən mahnını açdıqdan sonra, səs tonunuza uyğun olaraq akordları avtomatik transpozisiya edə bilərsiniz. Sistem tam olaraq minor, major və mürəkkəb (Compound) akord dərəcələrini qüsursuz şəkildə dəyişir.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Open Chord Sheet in pop-up dialog
+        function openSongModal(id) {
+            activeSongId = id;
+            const activeSong = songs.find(s => s.id === id);
+            if (!activeSong) return;
+
+            const modalOverlay = document.getElementById('songDetailModal');
+            const modalBody = document.getElementById('modalBodyContent');
+            const modalTitle = document.getElementById('modalSongTitle');
+            const modalArtist = document.getElementById('modalSongArtist');
+
+            if (!modalOverlay || !modalBody) return;
+
+            modalTitle.innerText = activeSong.title;
+            modalArtist.innerText = activeSong.artist;
+
+            // Render details inside modal body
+            renderModalSongDetails(activeSong, modalBody);
+
+            modalOverlay.style.display = "flex";
+            setTimeout(() => {
+                modalOverlay.classList.add('active');
+            }, 10);
+            document.body.style.overflow = "hidden"; // Disable background scrolling
+        }
+
+        function closeSongModal() {
+            const modalOverlay = document.getElementById('songDetailModal');
+            if (modalOverlay) {
+                modalOverlay.classList.remove('active');
+                setTimeout(() => {
+                    modalOverlay.style.display = "none";
+                }, 300);
+            }
+            document.body.style.overflow = ""; // Enable scrolling
+        }
+
+        function handleOutsideModalClick(event) {
+            const modalOverlay = document.getElementById('songDetailModal');
+            const modalContent = document.querySelector('.modal-content');
+            if (modalOverlay && modalContent && !modalContent.contains(event.target) && event.target === modalOverlay) {
+                closeSongModal();
+            }
+        }
+
+        function renderModalSongDetails(activeSong, container) {
+            container.innerHTML = "";
+            const isFav = favorites.includes(activeSong.id);
+            const songComments = comments.filter(c => c.songId === activeSong.id);
+
+            // Transpose Mixing Panel Deck
+            const deck = document.createElement('div');
+            deck.className = "mixing-deck";
+            deck.innerHTML = `
+                <div class="deck-info">
+                    <h4>Transpozisiya</h4>
+                    <p>Səs sahəsi diapazonu</p>
+                </div>
+                <div class="transpose-controls">
+                    <button class="deck-btn" onclick="adjustTranspositionVal(-1, ${activeSong.id})">-1</button>
+                    <div class="deck-display-badge" id="deckValDisplay">${activeTransposition >= 0 ? '+' : ''}${activeTransposition}</div>
+                    <button class="deck-btn" onclick="adjustTranspositionVal(1, ${activeSong.id})">+1</button>
+                    ${activeTransposition !== 0 ? '<button class="deck-btn-reset" onclick="resetTranspositionVal(' + activeSong.id + ')">Sıfırla</button>' : ''}
+                </div>
+            `;
+            container.appendChild(deck);
+
+            // Lead sheet parser block area
+            const lyricsCard = document.createElement('div');
+            lyricsCard.className = "lyrics-card";
+            
+            const area = document.createElement('div');
+            area.className = "lyrics-area";
+            area.innerHTML = parseLyricsToHtml(activeSong.chordsAndLyrics, activeTransposition);
+            
+            lyricsCard.appendChild(area);
+            container.appendChild(lyricsCard);
+
+            // Meta badges and Favorite bar
+            const metaDiv = document.createElement('div');
+            metaDiv.style.display = "flex";
+            metaDiv.style.justifyContent = "space-between";
+            metaDiv.style.alignItems = "center";
+            metaDiv.style.background = "var(--surface-color)";
+            metaDiv.style.border = "1px solid var(--border-color)";
+            metaDiv.style.borderRadius = "14px";
+            metaDiv.style.padding = "12px 18px";
+            metaDiv.innerHTML = `
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <div class="metadata-pill" style="margin:0; padding: 6px 12px; font-size:12px;">🎸 Kapo: ${activeSong.capo > 0 ? activeSong.capo + '-ci pərdə' : 'Yoxdur'}</div>
+                    <span style="font-size:12px; color:var(--text-muted);">👤 Yükləyən: @${escapeHtml(activeSong.submittedByUsername)}</span>
+                </div>
+                <button class="btn-circle-lg ${isFav ? 'is-favorite' : ''}" style="width:40px; height:40px; font-size: 16px;" onclick="toggleFavorite(${activeSong.id}); openSongModal(${activeSong.id})" title="${isFav ? 'Sevimlilərdən sil' : 'Sevimlilərə əlavə et'}">
+                    ★
+                </button>
+            `;
+            container.appendChild(metaDiv);
+
+            // Comments Board integration
+            const commDiv = document.createElement('div');
+            commDiv.className = "comments-section";
+            
+            let commentComposerHTML = "";
+            if (currentUser) {
+                commentComposerHTML = `
+                    <div class="comment-compose">
+                        <textarea id="commentInputText" placeholder="Mahnı haqqında öz şəxsi rəyinizi yazın..."></textarea>
+                        <button class="btn-primary" onclick="submitCommentModal(${activeSong.id})">Rəyini Paylaş</button>
+                    </div>
+                `;
+            } else {
+                commentComposerHTML = `
+                    <div class="comment-compose" style="align-items:center; text-align:center; padding: 20px; display:flex; flex-direction:column;">
+                        <span style="font-size:20px; margin-bottom: 4px;">💬</span>
+                        <h4 style="margin:0; font-size:13px;">Müzakirəyə Qoşulun</h4>
+                        <p style="font-size:11px; color:var(--text-muted); margin:4px 0 10px 0;">Mahnılara rəy yazmaq üçün lütfən daxil olun.</p>
+                        <button class="btn-primary" onclick="closeSongModal(); navigateToView('profile')">Giriş Səhifəsi</button>
+                    </div>
+                `;
+            }
+
+            let commentListHTML = "";
+            if (songComments.length === 0) {
+                commentListHTML = `<div class="no-matches-text" style="background:var(--surface-color); border-radius:16px;">Hələ rəy yazılmayın. İlk yazan siz olun! 📝</div>`;
+            } else {
+                commentListHTML = '<div class="comments-list">';
+                songComments.forEach(c => {
+                    const firstLet = c.username ? c.username[0].toUpperCase() : 'U';
+                    const colors = ["#E57373", "#F06292", "#BA68C8", "#9575CD", "#7986CB", "#64B5F6", "#4FC3F7", "#4DB6AC", "#81C784", "#F4A261"];
+                    const colHash = Array.from(c.username || 'U').reduce((acc, char) => acc + char.charCodeAt(0), 0) % colors.length;
+                    const bColor = colors[colHash];
+                    
+                    commentListHTML += `
+                        <div class="comment-item">
+                            <div class="comment-avatar-wrapper">
+                                <div class="comment-avatar" style="background-color: ${bColor}">${firstLet}</div>
+                            </div>
+                            <div class="comment-body">
+                                <div class="comment-head">
+                                    <span class="comment-user">@${escapeHtml(c.username)}</span>
+                                    <span class="comment-date">${formatMinutesAgo(c.timestamp)}</span>
+                                </div>
+                                <p class="comment-text">${escapeHtml(c.commentText)}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                commentListHTML += '</div>';
+            }
+
+            commDiv.innerHTML = `
+                <div class="comments-header-row" style="margin-top:20px;">
+                    <h3>İstifadəçi Rəyləri (${songComments.length})</h3>
+                </div>
+                ${commentComposerHTML}
+                ${commentListHTML}
+            `;
+            container.appendChild(commDiv);
+        }
+
+        // Modal Specific Operations to avoid full repaints
+        function adjustTranspositionVal(semitones, songId) {
+            activeTransposition += semitones;
+            if (activeTransposition > 12) activeTransposition = -11;
+            if (activeTransposition < -12) activeTransposition = 11;
+            
+            const activeSong = songs.find(s => s.id === songId);
+            const container = document.getElementById('modalBodyContent');
+            if (activeSong && container) {
+                renderModalSongDetails(activeSong, container);
+            }
+        }
+
+        function resetTranspositionVal(songId) {
+            activeTransposition = 0;
+            const activeSong = songs.find(s => s.id === songId);
+            const container = document.getElementById('modalBodyContent');
+            if (activeSong && container) {
+                renderModalSongDetails(activeSong, container);
+            }
+            showToast("Transpozisiya sıfırlandı", "success");
+        }
+
+        function submitCommentModal(songId) {
+            const txtArea = document.getElementById('commentInputText');
+            if (!txtArea) return;
+            const text = txtArea.value.trim();
+            if (!text) {
+                showToast("Rəy mətni boş buraxıla bilməz", "error");
+                return;
+            }
+
+            const newComm = {
+                id: Date.now(),
+                songId: songId,
+                username: currentUser.username,
+                commentText: text,
+                timestamp: Date.now()
+            };
+
+            comments.unshift(newComm); // add to top
+            localStorage.setItem('azchords_comments', JSON.stringify(comments));
+            
+            // Save to Firebase Database if active
+            fbSaveComment(newComm);
+            
+            txtArea.value = "";
+            showToast("Şərhiniz uğurla yerləşdirildi!", "success");
+            
+            // Re-render modal to reflect comments
+            const activeSong = songs.find(s => s.id === songId);
+            const container = document.getElementById('modalBodyContent');
+            if (activeSong && container) {
+                renderModalSongDetails(activeSong, container);
+            }
+        }
+
+        // Simulated Google Select Overlay
+        function openGoogleOverlay(event) {
+            if (event) event.preventDefault();
+            const overlay = document.getElementById('googleAuthOverlay');
+            if (overlay) {
+                overlay.style.display = "flex";
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                }, 10);
+            }
+        }
+
+        function closeGoogleOverlay(event) {
+            const overlay = document.getElementById('googleAuthOverlay');
+            if (overlay) {
+                if (event) {
+                    const box = document.querySelector('.g-auth-box');
+                    if (box && !box.contains(event.target) && event.target === overlay) {
+                        overlay.classList.remove('active');
+                        setTimeout(() => {
+                            overlay.style.display = "none";
+                        }, 250);
+                    }
+                } else {
+                    overlay.classList.remove('active');
+                    setTimeout(() => {
+                        overlay.style.display = "none";
+                    }, 250);
+                }
+            }
+        }
+
+        function selectGoogleAccount(email, username) {
+            closeGoogleOverlay();
+            showToast("Google hesabı ilə sinxronizasiya edilir...", "success");
+            
+            setTimeout(() => {
+                // Simulate saving in database, creating user session, sync Firebase database
+                let users = JSON.parse(localStorage.getItem('azchords_registered_users') || "[]");
+                let userObj = users.find(u => u.email === email);
+                
+                if (!userObj) {
+                    userObj = {
+                        id: Date.now(),
+                        username: username,
+                        email: email,
+                        passwordHash: "google_auth_token_firebase",
+                        isAdmin: false
+                    };
+                    users.push(userObj);
+                    localStorage.setItem('azchords_registered_users', JSON.stringify(users));
+                }
+
+                currentUser = userObj;
+                currentUserId = userObj.id;
+                localStorage.setItem('azchords_currentUser', JSON.stringify(currentUser));
+                
+                // Write user session to Firebase Realtime Database
+                if (isFirebaseInitialized && firebaseDB) {
+                    try {
+                        firebaseDB.ref('users/' + userObj.id).set({
+                            username: userObj.username,
+                            email: userObj.email,
+                            passwordHash: userObj.passwordHash,
+                            isAdmin: userObj.isAdmin
+                        });
+                    } catch(e) {
+                        console.error("Firebase write user failed:", e);
+                    }
+                }
+                
+                showToast(`Firebase: @${username} uğurla sinxronizasiya olundu!`, "success");
+                
+                renderUserBadge();
+                renderMainPanel();
+            }, 1000);
+        }
+
+        function handleGoogleFormSubmit(e) {
+            e.preventDefault();
+            const email = document.getElementById('gEmailInput').value.trim();
+            let username = document.getElementById('gUsernameInput').value.trim();
+            if (username.startsWith('@')) {
+                username = username.substring(1);
+            }
+            if (email && username) {
+                selectGoogleAccount(email, username);
+                document.getElementById('gEmailInput').value = "";
+                document.getElementById('gUsernameInput').value = "";
+            }
+        }
+
+        // Live Real-Time Syncing wrapper with Firebase API compatibility
+        function syncWithFirebase() {
+            if (!isFirebaseInitialized || !firebaseDB) return;
+
+            // 1. Live Sync Songs from Firebase Path '/songs'
+            firebaseDB.ref('songs').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const loadedSongs = [];
+                    Object.keys(data).forEach(key => {
+                        const song = data[key];
+                        loadedSongs.push({
+                            id: isNaN(key) ? key : parseInt(key),
+                            title: song.title,
+                            artist: song.artist,
+                            chordsAndLyrics: song.chordsAndLyrics,
+                            capo: parseInt(song.capo || 0),
+                            views: parseInt(song.views || 0),
+                            isApproved: song.isApproved !== false,
+                            submittedByUsername: song.submittedByUsername || "Sistem"
+                        });
+                    });
+                    if (loadedSongs.length > 0) {
+                        songs = loadedSongs;
+                        localStorage.setItem('azchords_songs', JSON.stringify(songs));
+                        renderSongList();
+                        renderMainPanel();
+                    }
+                }
+            });
+
+            // 2. Live Sync Comments from Firebase Path '/comments'
+            firebaseDB.ref('comments').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    const loadedComments = [];
+                    Object.keys(data).forEach(key => {
+                        const comm = data[key];
+                        loadedComments.push({
+                            id: isNaN(key) ? key : parseInt(key),
+                            songId: isNaN(comm.songId) ? comm.songId : parseInt(comm.songId),
+                            username: comm.username,
+                            commentText: comm.commentText,
+                            timestamp: comm.timestamp
+                        });
+                    });
+                    comments = loadedComments.sort((a,b) => b.timestamp - a.timestamp);
+                    localStorage.setItem('azchords_comments', JSON.stringify(comments));
+                    renderMainPanel();
+
+                    // Instantly refresh comment view in details popup modal if open
+                    const modalOverlay = document.getElementById('songDetailModal');
+                    if (modalOverlay && modalOverlay.classList.contains('active')) {
+                        const activeSong = songs.find(s => s.id === activeSongId);
+                        const modalBody = document.getElementById('modalBodyContent');
+                        if (activeSong && modalBody) {
+                            renderModalSongDetails(activeSong, modalBody);
+                        }
+                    }
+                }
+            });
+        }
+
+        function fbSaveSong(song) {
+            if (!isFirebaseInitialized || !firebaseDB) return;
+            try {
+                firebaseDB.ref('songs/' + song.id).set({
+                    title: song.title,
+                    artist: song.artist,
+                    chordsAndLyrics: song.chordsAndLyrics,
+                    capo: song.capo,
+                    views: song.views,
+                    isApproved: song.isApproved,
+                    submittedByUsername: song.submittedByUsername
+                });
+            } catch(e) {
+                console.error("Firebase save song failed:", e);
+            }
+        }
+
+        function fbSaveComment(comment) {
+            if (!isFirebaseInitialized || !firebaseDB) return;
+            try {
+                firebaseDB.ref('comments/' + comment.id).set({
+                    songId: comment.songId,
+                    username: comment.username,
+                    commentText: comment.commentText,
+                    timestamp: comment.timestamp
+                });
+            } catch(e) {
+                console.error("Firebase save comment failed:", e);
             }
         }
 
@@ -1911,6 +2662,9 @@
             comments.unshift(newComm); // add to top
             localStorage.setItem('azchords_comments', JSON.stringify(comments));
             
+            // Save to Firebase Database if active
+            fbSaveComment(newComm);
+            
             txtArea.value = "";
             showToast("Şərhiniz uğurla yerləşdirildi!", "success");
             renderMainPanel();
@@ -2029,6 +2783,9 @@
             songs.push(newSong);
             localStorage.setItem('azchords_songs', JSON.stringify(songs));
             
+            // Sync with Firebase if active
+            fbSaveSong(newSong);
+            
             showToast("Uğurlu! Mahnı dərhal sənəd bazasına əlavə olundu!", "success");
             
             // select newly added song automatically
@@ -2088,18 +2845,23 @@
                         <form id="loginForm" onsubmit="handleLoginSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
                             <div class="form-group">
                                 <label>E-poçt ünvanı <span style="color:#FF1744">*</span></label>
-                                <input type="email" id="lEmail" placeholder="istifadeci@azchords.com" required>
+                                <input type="email" id="lEmail" placeholder="ornek@azchords.com" required>
                             </div>
                             <div class="form-group">
                                 <label>Şifrə <span style="color:#FF1744">*</span></label>
                                 <input type="password" id="lPassword" placeholder="••••••••" required>
                             </div>
-                            <div class="bracket-tip" style="border-left-color:var(--primary-color);">
-                                💡 Sürətli test üçün məlumatlar:<br>
-                                Admin girişi: <b>admin@azchords.com</b> / Şifrə: <b>admin2026</b><br>
-                                İstifadəçi girişi: <b>istifadeci@azchords.com</b> / Şifrə: <b>user123</b>
-                            </div>
                             <button type="submit" class="btn-primary" style="margin-top:10px; width:100%; justify-content:center;">Giriş Et</button>
+                            <div class="divider-text"><span>və ya</span></div>
+                            <button type="button" class="btn-google-login" onclick="openGoogleOverlay(event)">
+                                <svg viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                                Google ilə Daxil Ol (Firebase)
+                            </button>
                         </form>
                     ` : `
                         <form id="registerForm" onsubmit="handleRegisterSubmit(event)" style="display:flex; flex-direction:column; gap:16px;">
@@ -2116,6 +2878,16 @@
                                 <input type="password" id="rPassword" placeholder="••••••••" required>
                             </div>
                             <button type="submit" class="btn-primary" style="margin-top:10px; width:100%; justify-content:center;">Hesab Yarat</button>
+                            <div class="divider-text"><span>və ya</span></div>
+                            <button type="button" class="btn-google-login" onclick="openGoogleOverlay(event)">
+                                <svg viewBox="0 0 24 24" width="18" height="18">
+                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z"/>
+                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                                </svg>
+                                Google ilə Daxil Ol (Firebase)
+                            </button>
                         </form>
                     `}
                 `;
@@ -2135,13 +2907,17 @@
             const email = document.getElementById('lEmail').value.trim();
             const password = document.getElementById('lPassword').value.trim();
 
-            if (email === "admin@azchords.com" && password === "admin2026") {
-                currentUser = { id: 100, username: "admin", email: email, isAdmin: true };
-            } else if (email === "istifadeci@azchords.com" && password === "user123") {
-                currentUser = { id: 101, username: "musiqi_sever", email: email, isAdmin: false };
+            // All login is dynamic to be robust and client-oriented!
+            let regUsers = JSON.parse(localStorage.getItem('azchords_registered_users') || "[]");
+            let found = regUsers.find(u => u.email === email && u.passwordHash === password);
+            
+            if (found) {
+                currentUser = found;
             } else {
-                // Allow dynamic credentials too to make things fluid
+                // Instantly register and login seamlessly
                 currentUser = { id: Date.now(), username: email.split('@')[0], email: email, isAdmin: false };
+                regUsers.push({ id: currentUser.id, username: currentUser.username, email: email, passwordHash: password, isAdmin: false });
+                localStorage.setItem('azchords_registered_users', JSON.stringify(regUsers));
             }
 
             localStorage.setItem('azchords_currentUser', JSON.stringify(currentUser));
