@@ -126,6 +126,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         songs.filter { favoriteSet.contains(it.id) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    val allComments: StateFlow<List<Comment>> = repository.allComments
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     // Currently Selected Song & Details
     var selectedSong by mutableStateOf<Song?>(null)
         private set
@@ -198,10 +201,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // Submit Song
     fun submitSong(onCompleted: () -> Unit) {
         val user = currentUser
-        if (user == null) {
-            authErrorMessage = "Mahnı əlavə etmək üçün daxil olmalısınız."
-            return
-        }
 
         if (inputSongTitle.isBlank() || inputSongArtist.isBlank() || inputSongChordsAndLyrics.isBlank()) {
             authErrorMessage = "Lütfən bütün sətirləri doldurun."
@@ -211,14 +210,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val capoVal = inputSongCapo.toIntOrNull() ?: 0
 
         viewModelScope.launch {
-            val isApprovedInitially = user.isAdmin // Admin submissions are approved instantly
+            val isApprovedInitially = user?.isAdmin == true // Admin submissions are approved instantly
             val song = Song(
                 title = inputSongTitle.trim(),
                 artist = inputSongArtist.trim(),
                 chordsAndLyrics = inputSongChordsAndLyrics.trim(),
                 capo = capoVal,
                 isApproved = isApprovedInitially,
-                submittedByUsername = user.username
+                submittedByUsername = user?.username ?: "Qonaq"
             )
 
             repository.insertSong(song)

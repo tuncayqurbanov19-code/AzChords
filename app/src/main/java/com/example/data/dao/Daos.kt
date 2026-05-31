@@ -76,6 +76,9 @@ interface CommentDao {
     @Query("SELECT * FROM comments WHERE songId = :songId ORDER BY timestamp DESC")
     fun getCommentsForSongFlow(songId: Int): Flow<List<Comment>>
 
+    @Query("SELECT * FROM comments")
+    fun getAllCommentsFlow(): Flow<List<Comment>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComment(comment: Comment)
 }

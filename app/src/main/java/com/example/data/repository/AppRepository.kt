@@ -76,6 +76,8 @@ class AppRepository(
     }
 
     // Comments
+    val allComments: Flow<List<Comment>> = commentDao.getAllCommentsFlow()
+
     fun getCommentsForSong(songId: Int): Flow<List<Comment>> {
         return commentDao.getCommentsForSongFlow(songId)
     }
