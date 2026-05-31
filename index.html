@@ -2672,20 +2672,11 @@
 
         // Render add song submission viewport
         function renderAddSongForm() {
-            if (!currentUser) {
-                mainPanel.innerHTML = `
-                    <div class="locked-placeholder-card fade-in-anim">
-                        <div class="locked-icon-badge">🔒</div>
-                        <h3>Mahnı Əlavə Etmək Məhduddur</h3>
-                        <p>Portalımızda yeni akkord vərəqi paylaşmaq və səs tonallığını tənzimləmək üçün istifadəçi hesabı ilə sistemə giriş olunmalıdır.</p>
-                        <button class="btn-primary" style="margin-top:12px;" onclick="navigateToView('profile')">Hesaba Giriş Et</button>
-                    </div>
-                `;
-                return;
-            }
-
             const pDiv = document.createElement('div');
             pDiv.className = "submission-panel fade-in-anim";
+            
+            const submitterVal = currentUser ? `@${currentUser.username}` : "Qonaq";
+            
             pDiv.innerHTML = `
                 <div>
                     <h2 style="margin:0 0 6px 0; font-family:'Playfair Display',serif; font-size:24px;">Yeni Mahnı Akkordu Paylaş</h2>
@@ -2718,7 +2709,7 @@
                         </div>
                         <div class="form-group">
                             <label>Təqdim Edən</label>
-                            <input type="text" value="@${currentUser.username}" readonly style="opacity:0.6; cursor:not-allowed;">
+                            <input type="text" id="fSubmittedBy" value="${submitterVal}" placeholder="Məsələn: Orxan və ya Qonaq" style="background: var(--surface-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px; border-radius: 6px;">
                         </div>
                     </div>
                     
@@ -2769,6 +2760,9 @@
                 return;
             }
 
+            const submitterText = (document.getElementById('fSubmittedBy').value || "Qonaq").trim();
+            const usernameVal = submitterText.startsWith('@') ? submitterText.substring(1) : submitterText;
+
             const newSong = {
                 id: songs.length + 1,
                 title: title,
@@ -2777,7 +2771,7 @@
                 capo: capo,
                 views: 0,
                 isApproved: true, // Autoapprove submissions locally to make testing fun and functional!
-                submittedByUsername: currentUser.username
+                submittedByUsername: usernameVal || "Qonaq"
             };
 
             songs.push(newSong);
@@ -2817,20 +2811,7 @@
                     </div>
                     <div class="divider"></div>
 
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; text-align:center;">
-                        <div style="background:var(--surface-bg); padding:16px; border-radius:16px; border:1px solid var(--border-color);">
-                            <span style="font-size:24px;">⭐</span>
-                            <h4 style="margin:8px 0 2px 0; font-size:13px; color:var(--text-muted);">Repertuarım</h4>
-                            <p style="margin:0; font-size:22px; font-weight:800; color:var(--primary-color);">${favorites.length}</p>
-                        </div>
-                        <div style="background:var(--surface-bg); padding:16px; border-radius:16px; border:1px solid var(--border-color);">
-                            <span style="font-size:24px;">🎸</span>
-                            <h4 style="margin:8px 0 2px 0; font-size:13px; color:var(--text-muted);">Mahnılarım</h4>
-                            <p style="margin:0; font-size:22px; font-weight:800; color:var(--primary-color);">${mySubmissions.length}</p>
-                        </div>
-                    </div>
-
-                    <button class="btn-primary" style="background:#FF1744; color:#fff; align-self:center; font-weight:bold;" onclick="handleLogout()">
+                    <button class="btn-primary" style="background:#FF1744; color:#fff; align-self:center; font-weight:bold; margin-top:20px;" onclick="handleLogout()">
                         Hesabdan Çıxış Et 🚪
                     </button>
                 `;
